@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Paciente, Profesional, Pago, Evolucion, Cita
 from . import db
 from datetime import datetime
+from datetime import date
 from . import db
 from flask import make_response, send_file
 from xhtml2pdf import pisa
@@ -656,12 +657,12 @@ def seleccionar_paciente_contrato():
 @main.route('/ver_contrato_paciente/<int:id>')
 def ver_contrato_paciente(id):
     paciente = Paciente.query.get_or_404(id)
-    return render_template('contrato_paciente.html', paciente=paciente)
+    return render_template('contrato_paciente.html', paciente=paciente, date=date)  # ⬅️ AQUI
 
 @main.route('/descargar_contrato/<int:id>')
 def descargar_contrato(id):
     paciente = Paciente.query.get_or_404(id)
-    html = render_template("contrato_paciente_pdf.html", paciente=paciente)
+    html = render_template("contrato_paciente_pdf.html", paciente=paciente, date=date)  # ⬅️ AQUI TAMBIÉN
     result = BytesIO()
     pisa.CreatePDF(html, dest=result)
     result.seek(0)
