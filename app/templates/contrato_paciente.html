@@ -1,0 +1,18 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2>📄 Contrato de Prestación de Servicios</h2>
+
+<p>Paciente: <strong>{{ paciente.nombre }}</strong></p>
+<p>RUT: {{ paciente.rut }}</p>
+<p>Dirección: {{ paciente.direccion }}, {{ paciente.comuna }}</p>
+<p>Fecha de nacimiento: {{ paciente.fecha_nacimiento }} (Edad: {{ paciente.edad }})</p>
+<p>Correo: {{ paciente.correo }}</p>
+<p>Contacto: {{ paciente.contacto }}</p>
+<p>Apoderado: {{ paciente.nombre_apoderado }} - {{ paciente.rut_apoderado }}</p>
+
+<hr>
+
+<p>En la ciudad de Santiago, con fecha {{ date.today().strftime("%d/%m/%Y") }},...</p>
+
+<a href="{{ url_for('main.descargar_contrato', id=paciente.id) }}" class="btn">📥 Descargar contrato en PDF</a>
+{% endblock %}

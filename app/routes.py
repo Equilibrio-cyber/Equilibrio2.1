@@ -642,3 +642,27 @@ def reporte_ficha_pdf(id):
     pisa.CreatePDF(html, dest=result)
     result.seek(0)
     return send_file(result, download_name=f"ficha_clinica_{paciente.nombre}.pdf", as_attachment=True)
+
+@main.route('/seleccionar_paciente_contrato', methods=['GET', 'POST'])
+def seleccionar_paciente_contrato():
+    pacientes = Paciente.query.all()
+
+    if request.method == 'POST':
+        paciente_id = request.form['paciente_id']
+        return redirect(url_for('main.ver_contrato_paciente', id=paciente_id))
+
+    return render_template('seleccionar_paciente_contrato.html', pacientes=pacientes)
+
+@main.route('/ver_contrato_paciente/<int:id>')
+def ver_contrato_paciente(id):
+    paciente = Paciente.query.get_or_404(id)
+    return render_template('contrato_paciente.html', paciente=paciente)
+
+@main.route('/descargar_contrato/<int:id>')
+def descargar_contrato(id):
+    paciente = Paciente.query.get_or_404(id)
+    html = render_template("contrato_paciente_pdf.html", paciente=paciente)
+    result = BytesIO()
+    pisa.CreatePDF(html, dest=result)
+    result.seek(0)
+    return send_file(result, download_name=f"Contrato_{paciente.nombre}.pdf", as_attachment=True)

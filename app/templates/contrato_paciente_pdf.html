@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contrato - {{ paciente.nombre }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12pt; }
+        h1, h2 { text-align: center; }
+        .firmas { margin-top: 100px; display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <h1>Contrato de Prestación de Servicios Clínicos</h1>
+    <p>Fecha: {{ date.today().strftime("%d/%m/%Y") }}</p>
+
+    <p>Comparecen: El Centro Médico <strong>"Centro Equilibrio"</strong> y el/la paciente <strong>{{ paciente.nombre }}</strong>, RUT <strong>{{ paciente.rut }}</strong>, nacido/a el {{ paciente.fecha_nacimiento }} (Edad: {{ paciente.edad }} años), domiciliado/a en {{ paciente.direccion }}, comuna de {{ paciente.comuna }}, correo: {{ paciente.correo }}, contacto: {{ paciente.contacto }}.</p>
+
+    <p><strong>Apoderado/a:</strong> {{ paciente.nombre_apoderado }} (RUT: {{ paciente.rut_apoderado }}), correo: {{ paciente.correo_apoderado }}, contacto: {{ paciente.contacto_apoderado }}.</p>
+
+    <h2>ACUERDOS</h2>
+    <ol>
+        <li>El Centro brindará atención clínica según ficha clínica.</li>
+        <li>El paciente autoriza uso de datos solo para fines clínicos internos.</li>
+        <li>El paciente se compromete a asistir puntualmente a sus sesiones.</li>
+        <li>El costo de los servicios será determinado en base al tratamiento.</li>
+        <li>Ambas partes declaran estar de acuerdo y firman este contrato.</li>
+    </ol>
+
+    <div class="firmas">
+        <div>
+            _________________________<br>
+            Firma del Centro Equilibrio
+        </div>
+        <div>
+            _________________________<br>
+            Firma del Paciente / Apoderado
+        </div>
+    </div>
+</body>
+</html>
