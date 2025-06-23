@@ -1,0 +1,18 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="card">
+  <h2>📂 Historial de Citas por Paciente</h2>
+  <form method="POST">
+    <label for="paciente_id">Selecciona un paciente:</label>
+    <select name="paciente_id" required>
+      <option value="">-- Selecciona --</option>
+      {% for paciente in pacientes %}
+        <option value="{{ paciente.id }}">{{ paciente.nombre }} ({{ paciente.rut }})</option>
+      {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit">Ver Historial</button>
+  </form>
+</div>
+{% endblock %}

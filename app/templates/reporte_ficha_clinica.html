@@ -1,0 +1,24 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<h2>📝 Ficha Clínica de {{ paciente.nombre }}</h2>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Fecha</th>
+        <th>Estado del Paciente (1-10)</th>
+        <th>Anotación Clínica</th>
+    </tr>
+    {% for ev in evoluciones %}
+    <tr>
+        <td>{{ ev.fecha.strftime("%d/%m/%Y") }}</td>
+        <td>{{ ev.estado_paciente }}</td>
+        <td>{{ ev.anotacion }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>📊 Evolución Gráfica</h3>
+<img src="data:image/png;base64,{{ grafico }}" alt="Gráfico evolución" style="max-width:100%; border: 1px solid #ccc; padding:10px;">
+
+<a href="{{ url_for('main.ver_ficha_clinica') }}">🔙 Volver</a>
+{% endblock %}

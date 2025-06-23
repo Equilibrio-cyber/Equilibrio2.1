@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Citas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>📅 Historial de Citas de {{ paciente.nombre }}</h2>
+        {% if citas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Profesional</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr>
+                    <td>{{ cita.fecha }}</td>
+                    <td>{{ cita.profesional.nombre }}</td>
+                    <td>{{ cita.motivo }}</td>
+                    <td>{{ cita.estado }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>❗ Este paciente no tiene citas registradas.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

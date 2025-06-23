@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha Clínica</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>📝 Ficha Clínica de {{ paciente.nombre }}</h2>
+        <a href="{{ url_for('main.estadisticas_clinicas', id=paciente.id) }}" class="btn-export">📈 Ver Estadísticas</a>
+
+        <form method="POST" class="formulario">
+            <label>Fecha:</label>
+            <input type="date" name="fecha" required>
+
+            <label>Cómo encontró al paciente (1 a 10):</label>
+            <input type="number" name="estado_paciente" min="1" max="10" required>
+
+            <label>Anotación Clínica:</label>
+            <textarea name="anotacion" rows="4" required></textarea>
+
+            <button type="submit">Guardar evolución</button>
+        </form>
+
+        <hr>
+
+        <h3>📚 Evoluciones anteriores</h3>
+        {% for evo in evoluciones %}
+            <div class="ficha-box">
+                <p><strong>📅 {{ evo.fecha }}</strong></p>
+                <p><strong>Estado del paciente:</strong> {{ evo.estado_paciente }}/10</p>
+                <p>{{ evo.anotacion }}</p>
+            </div>
+        {% else %}
+            <p>No hay evoluciones registradas.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

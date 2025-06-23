@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Profesionales Registrados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h2>🔍Profesionales Registrados</h2>
+    <div class="export-right">
+        <a class="btn-export" href="/exportar_profesionales_pdf">📄 Exportar PDF</a>
+        <a class="btn-export" href="/exportar_profesionales_excel">📊 Exportar Excel</a>
+
+    </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Especialidad</th>
+                    <th>RUT</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Ingreso</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profesional in profesionales %}
+                <tr>
+                    <td>{{ profesional.nombre }}</td>
+                    <td>{{ profesional.especialidad }}</td>
+                    <td>{{ profesional.rut }}</td>
+                    <td>{{ profesional.correo }}</td>
+                    <td>{{ profesional.telefono }}</td>
+                    <td>{{ profesional.fecha_ingreso }}</td>
+                    <td>
+                        <a href="{{ url_for('main.editar_profesional', id=profesional.id) }}" class="btn-editar">✏️</a>
+                        <form method="POST" action="{{ url_for('main.eliminar_profesional', id=profesional.id) }}" style="display:inline;">
+                            <button type="submit" class="btn-eliminar" onclick="return confirm('¿Eliminar este profesional?')">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<h2>✏️ Editar Pago</h2>
+
+<form method="POST">
+    <label for="paciente_id">Paciente:</label>
+    <select name="paciente_id" required>
+        {% for paciente in pacientes %}
+            <option value="{{ paciente.id }}" {% if paciente.id == pago.paciente_id %}selected{% endif %}>{{ paciente.nombre }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="tipo_pago">Tipo de Pago:</label>
+    <select name="tipo_pago" required>
+        {% for tipo in ['Transferencia', 'Débito', 'Crédito', 'Efectivo'] %}
+            <option value="{{ tipo }}" {% if tipo == pago.tipo_pago %}selected{% endif %}>{{ tipo }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="fecha_pago">Fecha de Pago:</label>
+    <input type="date" name="fecha_pago" value="{{ pago.fecha_pago }}" required><br><br>
+
+    <label for="monto">Monto (CLP):</label>
+    <input type="number" name="monto" value="{{ pago.monto }}" required><br><br>
+
+    <button type="submit">💾 Guardar Cambios</button>
+</form>
+
+<a href="{{ url_for('main.ver_pagos') }}">🔙 Volver a Pagos</a>
+{% endblock %}

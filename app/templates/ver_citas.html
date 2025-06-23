@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<div class="main-content">
+  <h2>📋 Citas Profesionales Registradas</h2>
+
+  {% if citas %}
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Paciente</th>
+        <th>Profesional</th>
+        <th>Fecha y Hora</th>
+        <th>Motivo</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cita in citas %}
+      <tr>
+        <td>{{ cita.paciente.nombre }}</td>
+        <td>{{ cita.profesional.nombre }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.motivo }}</td>
+        <td>{{ cita.estado }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p style="text-align:center;">No hay citas registradas.</p>
+  {% endif %}
+</div>
+{% endblock %}

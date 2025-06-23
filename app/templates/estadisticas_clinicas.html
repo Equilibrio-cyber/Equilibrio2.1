@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>📊 Estadísticas de {{ paciente.nombre }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .main-content {
+            padding: 20px;
+            background: #f4f4f4;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 40px auto;
+            width: 85%;
+        }
+        canvas {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛ Inicio</a></li>
+            <li><a href="/registrar_paciente">👱 Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍 Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍 Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>📈 Estadísticas de evolución - {{ paciente.nombre }}</h2>
+        <canvas id="grafico_estado" height="120"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('grafico_estado').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ datos | map(attribute='fecha') | list | tojson }},
+                datasets: [{
+                    label: 'Estado del paciente (1 a 10)',
+                    data: {{ datos | map(attribute='estado') | list | tojson }},
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: function(context) {
+                        const value = context.raw;
+                        if (value <= 3) return 'red';
+                        if (value <= 5) return 'orange';
+                        return 'green';
+                    }
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'Escala del Estado (1 = muy mal, 10 = excelente)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '📝 Evolución Clínica del Paciente'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const valor = context.raw;
+                                if (valor <= 3) return '⚠️ Recaída: ' + valor;
+                                if (valor <= 5) return '🟠 Regular: ' + valor;
+                                return '✅ Bueno: ' + valor;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

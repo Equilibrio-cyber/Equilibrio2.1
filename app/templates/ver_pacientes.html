@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes Registrados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>📋 Pacientes Registrados</h1>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px;">
+            <a href="{{ url_for('main.exportar_pdf') }}" class="btn btn-danger">📄 Exportar PDF</a>
+            <a href="{{ url_for('main.exportar_excel') }}" class="btn btn-success">📊 Exportar Excel</a>
+
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Correo</th>
+                    <th>Contacto</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paciente in pacientes %}
+                <tr>
+                    <td>{{ paciente.nombre }}</td>
+                    <td>{{ paciente.edad }}</td>
+                    <td>{{ paciente.correo }}</td>
+                    <td>{{ paciente.contacto }}</td>
+                    <td>{{ paciente.fecha_ingreso }}</td>
+                    <td>
+                        <a href="{{ url_for('main.editar_paciente', id=paciente.id) }}" class="btn btn-sm">✏️ Editar</a>
+                        <form action="{{ url_for('main.eliminar_paciente', id=paciente.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm" onclick="return confirm('¿Seguro que quieres eliminar este paciente?')">🗑️ Eliminar</button>
+                        </form>
+                        <a href="{{ url_for('main.ficha_clinica', id=paciente.id) }}" class="btn btn-sm">📝 Ficha</a>
+                        <a href="{{ url_for('main.reporte_ficha_pdf', id=paciente.id) }}" class="btn btn-sm">📄 Ver Reporte</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

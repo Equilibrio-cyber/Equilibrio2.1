@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Profesional</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h2>✍️Registrar Profesional</h2>
+        <form method="POST" class="formulario">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
+
+            <label>Especialidad:</label>
+            <input type="text" name="especialidad" required>
+
+            <label>RUT:</label>
+            <input type="text" name="rut" required>
+
+            <label>Correo:</label>
+            <input type="email" name="correo" required>
+
+            <label>Teléfono:</label>
+            <input type="text" name="telefono" required>
+
+            <label>Fecha de Ingreso:</label>
+            <input type="date" name="fecha_ingreso" required>
+
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    @page {
+        size: A4 landscape;
+        margin: 1cm;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 9pt;
+        margin: 0;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed; /* 👈 Esto fuerza que las columnas se distribuyan */
+        word-wrap: break-word;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 4px;
+        text-align: center;
+        font-size: 9pt;
+    }
+
+    th {
+        background-color: #007BFF;
+        color: white;
+    }
+        body { font-family: Arial, sans-serif; font-size: 10pt; }
+        h2 { text-align: center; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Reporte Mensual de Pagos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Mes/Año</th>
+                <th>Total</th>
+                <th>Transferencia</th>
+                <th>Débito</th>
+                <th>Crédito</th>
+                <th>Efectivo</th>
+                <th>Total CLP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mes, datos in resumen.items() %}
+            <tr>
+                <td>{{ mes }}</td>
+                <td>{{ datos.total }}</td>
+                <td>{{ datos['Transferencia'] }}</td>
+                <td>{{ datos['Débito'] }}</td>
+                <td>{{ datos['Crédito'] }}</td>
+                <td>{{ datos['Efectivo'] }}</td>
+                <td>${{ "{:,}".format(datos['monto_total']) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<div class="card">
+  <h2>📅 Registrar Cita Profesional</h2>
+  <form method="POST">
+    <label>Paciente:</label>
+    <select name="paciente_id" required>
+      {% for paciente in pacientes %}
+        <option value="{{ paciente.id }}">{{ paciente.nombre }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Profesional:</label>
+    <select name="profesional_id" required>
+      {% for profesional in profesionales %}
+        <option value="{{ profesional.id }}">{{ profesional.nombre }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Fecha y hora:</label>
+    <input type="datetime-local" name="fecha" required>
+
+    <label>Motivo:</label>
+    <textarea name="motivo" required></textarea>
+
+    <label>Estado de la cita</label>
+    <select name="estado" required>
+        <option value="Pendiente">Pendiente</option>
+        <option value="No asiste">No asiste</option>
+        <option value="Asiste a consulta">Asiste a consulta</option>
+    </select>
+
+
+    <button type="submit">Registrar Cita</button>
+  </form>
+</div>
+{% endblock %}

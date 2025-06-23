@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Paciente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h2>✍️Registrar Paciente</h2>
+        <form method="POST">
+            <input type="text" name="rut" placeholder="RUT del paciente" required>
+            <input type="text" name="nombre" placeholder="Nombre del paciente" required>
+            <input type="date" name="fecha_nacimiento" required> Fecha de Nacimiento
+            <input type="text" name="direccion" placeholder="Dirección">
+            <input type="text" name="comuna" placeholder="Comuna">
+            <select name="genero" required>
+                <option value="">Seleccionar género</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <select name="prevision" required>
+                <option value="">Seleccionar previsión</option>
+                <option value="Fonasa">Fonasa</option>
+                <option value="Isapre">Isapre</option>
+            </select>
+            <input type="text" name="ocupacion" placeholder="Ocupación">
+            <input type="email" name="correo" placeholder="Correo paciente">
+            <input type="text" name="contacto" placeholder="Número paciente">
+            <input type="date" name="fecha_ingreso"> Fecha de Ingreso
+            <input type="text" name="rut_apoderado" placeholder="RUT Apoderado">
+            <input type="text" name="nombre_apoderado" placeholder="Nombre Apoderado">
+            <input type="email" name="correo_apoderado" placeholder="Correo Apoderado">
+            <input type="text" name="contacto_apoderado" placeholder="Número Apoderado">
+            <button type="submit">Guardar</button>
+            <button type="reset">Limpiar</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="error">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

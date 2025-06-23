@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Mensual de Pagos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard">
+    <div class="sidebar">
+        <ul>
+            <li><a href="/logout">🚪 Cerrar sesión</a></li>
+            <li><a href="/dashboard">⌛Inicio</a></li>
+            <li><a href="/registrar_paciente">👱Registrar Paciente</a></li>
+            <li><a href="/visualizar_pacientes">🔍Ver Pacientes</a></li>
+            <li><a href="/registrar_pago">💳 Registro de Pagos</a></li>
+            <li><a href="/ver_pagos">🔍 Ver Pagos</a></li>
+            <li><a href="/reporte_pagos">📊 Reporte Mensual</a></li>
+            <li><a href="/registrar_profesional">🧑‍⚕️ Profesionales</a></li>
+            <li><a href="/ver_profesionales">🔍Ver Profesionales</a></li>
+            <li><a href="/seleccionar_paciente_ficha">📋 Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.ver_ficha_clinica') }}">📋 Ver Ficha Clínica</a></li>
+            <li><a href="{{ url_for('main.registrar_cita') }}">📅 Registrar Cita</a></li>
+            <li><a href="{{ url_for('main.ver_citas') }}">📋 Ver Citas</a></li>
+            <li><a href="{{ url_for('main.seleccionar_historial_citas') }}">🗂️ Historial de Citas</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>📊 Reporte Mensual de Pagos</h2>
+            <a class="btn-export" href="/exportar_reporte_mensual_pdf">📄 Exportar PDF</a>
+            <a class="btn-export" href="/exportar_reporte_mensual_excel">📊 Exportar Excel</a>
+        <div class="export-right">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mes/Año</th>
+                    <th>Total</th>
+                    <th>Transferencia</th>
+                    <th>Débito</th>
+                    <th>Crédito</th>
+                    <th>Efectivo</th>
+                    <th>Total CLP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mes, datos in resumen.items() %}
+                <tr>
+                    <td>{{ mes }}</td>
+                    <td>{{ datos.total }}</td>
+                    <td>{{ datos['Transferencia'] }}</td>
+                    <td>{{ datos['Débito'] }}</td>
+                    <td>{{ datos['Crédito'] }}</td>
+                    <td>{{ datos['Efectivo'] }}</td>
+                    <td>${{ "{:,}".format(datos['monto_total']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

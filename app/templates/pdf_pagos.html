@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagos Registrados</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid black; padding: 5px; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>💳 Pagos Registrados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Tipo de Pago</th>
+                <th>Fecha</th>
+                <th>Respaldo</th>
+                <th>Monto (CLP)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.paciente.nombre }}</td>
+                <td>{{ pago.tipo_pago }}</td>
+                <td>{{ pago.fecha_pago }}</td>
+                <td>{{ pago.respaldo_archivo or 'Sin respaldo' }}</td>
+                <td>${{ "{:,}".format(pago.monto) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
